@@ -10,6 +10,7 @@ function Home() {
             .then((donnee) => setStatus(donnee.status))
             .catch(()=> setStatus("erreur"))
     }, []);
+    
     return (
         <main>
             <p>{status}</p>

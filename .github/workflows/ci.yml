@@ -1,0 +1,45 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres: 
+        image: postgres:16
+        environment:
+          POSTGRES_DB:  gridinsight
+          POSTGRES_USER:  gridinsight
+          POSTGRES_PASSWORD:  gridinsight
+        ports:
+          5432:5432
+        options: >-
+          --health-cmd "pg_isready -U gridinsight"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4          
+      - uses: actions/setup-python@v5      
+        with:
+          python-version: "3.13"         
+      - run: pip install -r requirements.txt
+      - run: ruff check .
+      - run: python manage.py test
+
+  frontend:
+    run-on: ubuntu-latest
+    default:
+      run:
+        working-directory: frontend
+    steps:
+      - uses:  actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "v26.10.0"
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build

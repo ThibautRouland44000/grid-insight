@@ -1,3 +1,8 @@
-from django.test import TestCase
+from rest_framework.test import APITestCase
 
-# Create your tests here.
+
+class TestConnection(APITestCase):
+    def test_connection_back_front(self):
+        response=self.client.get("/api/health/")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["status"], "ok")
