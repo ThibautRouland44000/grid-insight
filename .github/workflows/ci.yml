@@ -10,12 +10,12 @@ jobs:
     services:
       postgres: 
         image: postgres:16
-        environment:
+        env:
           POSTGRES_DB:  gridinsight
           POSTGRES_USER:  gridinsight
           POSTGRES_PASSWORD:  gridinsight
         ports:
-          5432:5432
+          - "5432:5432"
         options: >-
           --health-cmd "pg_isready -U gridinsight"
           --health-interval 5s
@@ -31,8 +31,8 @@ jobs:
       - run: python manage.py test
 
   frontend:
-    run-on: ubuntu-latest
-    default:
+    runs-on: ubuntu-latest
+    defaults:
       run:
         working-directory: frontend
     steps:
