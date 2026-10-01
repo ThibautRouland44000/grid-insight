@@ -21,6 +21,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
+CONNECTION_API = { 
+        'RTE_CLIENT_ID': env('RTE_CLIENT_ID', default=""),
+        'RTE_CLIENT_SECRET': env('RTE_CLIENT_SECRET', default=""),
+}
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
