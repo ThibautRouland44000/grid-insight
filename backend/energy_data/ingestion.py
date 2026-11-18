@@ -13,6 +13,8 @@ def save_generation_mix(data):
 
         for mesure in item["values"]:
             date = datetime.fromisoformat(mesure["start_date"])
+            if mesure["value"] is None:
+                continue
             Reading.objects.update_or_create(
                 recorded_at=date,
                 source=item["production_type"],

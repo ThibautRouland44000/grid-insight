@@ -38,6 +38,41 @@ FAKE_DATA = {
     ]
 }
 
+FAKE_DATA_2 = {
+    "generation_mix_15min_time_scale": [
+        {
+            "production_type": "NUCLEAR",
+            "production_subtype": "TOTAL",
+            "values": [
+                {
+                    "start_date": "2017-06-15T00:00:00+02:00",
+                    "end_date": "2017-06-15T00:15:00+02:00",
+                    "updated_date": "2017-06-16T00:00:00+02:00",
+                    "value": None,
+                },
+                {
+                    "start_date": "2017-06-15T00:15:00+02:00",
+                    "end_date": "2017-06-15T00:30:00+02:00",
+                    "updated_date": "2017-06-16T00:00:00+02:00",
+                    "value": 40100,
+                },
+            ],
+        },
+        {
+            "production_type": "BIOENERGY",
+            "production_subtype": "BIOGAS",
+            "values": [
+                {
+                    "start_date": "2017-06-15T00:00:00+02:00",
+                    "end_date": "2017-06-15T00:15:00+02:00",
+                    "updated_date": "2017-06-16T00:00:00+02:00",
+                    "value": 211,
+                },
+            ],
+        },
+    ]
+}
+
 
 @pytest.mark.django_db
 def test_save_keeps_only_total_subtypes():
@@ -53,3 +88,10 @@ def test_save_is_idempotent():
     save_generation_mix(FAKE_DATA)
     count = Reading.objects.count()
     assert count == 2
+
+
+@pytest.mark.django_db
+def test_save_replace_value_none():
+    save_generation_mix(FAKE_DATA_2)
+    count = Reading.objects.count()
+    assert count == 1
