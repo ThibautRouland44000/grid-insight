@@ -1,5 +1,8 @@
 from django.urls import path
 
-from .views import health
+from .views import ReadingListView, health
 
-urlpatterns = [path("health/", health)]
+urlpatterns = [
+    path("health/", health),
+    path("readings/", ReadingListView.as_view(), name="reading-List"),
+]
