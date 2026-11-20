@@ -101,6 +101,10 @@ DATABASES = {
 # Allow frontend to call API
 CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
 
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 100,
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators

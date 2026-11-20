@@ -12,5 +12,5 @@ def health(request):
 
 
 class ReadingListView(ListAPIView):
-    queryset = Reading.objects.all().order_by("recorded_at")
+    queryset = Reading.objects.all().order_by("recorded_at", "source")
     serializer_class = ReadingSerializer
